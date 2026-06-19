@@ -1,0 +1,890 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const kawy = [
+  {
+    num: "01",
+    nazwa: "Ethiopia Yirgacheffe",
+    kraj: "Etiopia",
+    region: "Yirgacheffe, Gedeo Zone",
+    wysokosc: "1800–2200 m n.p.m.",
+    profil: "Washed",
+    roast: 28,
+    noty: ["jagoda", "jaśmin", "cytrus bergamota", "herbata biała"],
+    cena: 54,
+    opis: "Archetypiczny Yirgacheffe — floral, delikatny, z wyraźną kwaskowatością cytrusową. Metoda: przelewowa V60."
+  },
+  {
+    num: "02",
+    nazwa: "Colombia Huila",
+    kraj: "Kolumbia",
+    region: "Huila, Finca El Paraíso",
+    wysokosc: "1650–1900 m n.p.m.",
+    profil: "Natural",
+    roast: 45,
+    noty: ["czerwona śliwka", "karmel", "ciemna czekolada", "wanilia"],
+    cena: 62,
+    opis: "Kawy z Huila słyną z pełni ciała i słodkości. Natural dodaje owocowej głębi. Znakomita do flat white i filtru."
+  },
+  {
+    num: "03",
+    nazwa: "Guatemala Antigua",
+    kraj: "Gwatemala",
+    region: "Antigua, Alta Verapaz",
+    wysokosc: "1500–1700 m n.p.m.",
+    profil: "Washed",
+    roast: 58,
+    noty: ["gorzka czekolada", "brown sugar", "orzechy laskowe", "dym"],
+    cena: 48,
+    opis: "Klasyczna Antigua — zbalansowana, poważna. Idealny medium roast do espresso i americano."
+  },
+  {
+    num: "04",
+    nazwa: "Kenya AA Kirinyaga",
+    kraj: "Kenia",
+    region: "Kirinyaga, Mount Kenya",
+    wysokosc: "1700–2000 m n.p.m.",
+    profil: "Double Washed",
+    roast: 35,
+    noty: ["czarna porzeczka", "grejpfrut", "kawa różana", "syrop klonowy"],
+    cena: 69,
+    opis: "Kenijskie AA to złoty standard kwasowości. Winogrona, owoce, złożoność — filtr lub aeropress."
+  }
+];
+
+const planySubskrypcji = [
+  {
+    nazwa: "Odkrywca",
+    tag: "START",
+    kawa: "250 g / miesiąc",
+    opis: "Jedna starannie dobrana kawa single origin, zmielona na twój sprzęt lub w ziarnach.",
+    cena: "79 zł / mies.",
+    features: ["1 origin / mies.", "zmielona lub ziarno", "karta degustacyjna", "bezpłatna dostawa"]
+  },
+  {
+    nazwa: "Koneser",
+    tag: "POLECAMY",
+    kawa: "2 × 250 g / miesiąc",
+    opis: "Dwie różne kawy — jedna jasna, jedna ciemniejsza — idealna dla szerokich smaków.",
+    cena: "139 zł / mies.",
+    features: ["2 originy / mies.", "zmielona lub ziarno", "karta degustacyjna", "bezpłatna dostawa", "dostęp do bloga palarni", "5% rabatu na sklep"]
+  },
+  {
+    nazwa: "Kolekcjoner",
+    tag: "EKSPERT",
+    kawa: "4 × 250 g / miesiąc",
+    opis: "Cztery kawy z całego świata, w tym edycje limitowane i mikroloty. Dla zaprzysięgłych pasjonatów.",
+    cena: "259 zł / mies.",
+    features: ["4 originy / mies.", "zmielona lub ziarno", "karta degustacyjna", "bezpłatna dostawa", "dostęp do bloga palarni", "10% rabatu na sklep", "wcześniejszy dostęp do nowych lotów", "zaproszenie na cup tasting"]
+  }
+];
+
+const opinie = [
+  {
+    autor: "Karolina M.",
+    miasto: "Warszawa",
+    tekst: "Od kiedy dostałam pierwszy pakiet Odkrywcy, nie wyobrażam sobie wracać do supermarketowej kawy. Etiopia z przepisu na V60 to coś zupełnie innego.",
+    ocena: 5
+  },
+  {
+    autor: "Tomasz W.",
+    miasto: "Kraków",
+    tekst: "Prowadzę małą kawiarnię i od roku zaopatruję się w Czarnej Palarni. Klienci pytają o kawę z nazwą, nie tylko o kawę. Polecam współpracę.",
+    ocena: 5
+  },
+  {
+    autor: "Ewa & Piotr R.",
+    miasto: "Poznań",
+    tekst: "Plan Koneser to idealne rozwiązanie dla nas dwojga — ona lubi jasne i kwiatowe, ja ciemne i czekoladowe. Oboje szczęśliwi.",
+    ocena: 5
+  }
+];
+
+const navLinks = [
+  { href: "#o-nas", label: "Palarnia" },
+  { href: "#kawy", label: "Kawy" },
+  { href: "#subskrypcja", label: "Subskrypcja" },
+  { href: "#b2b", label: "B2B" },
+  { href: "#zamow", label: "Zamów" }
+];
+---
+
+<Layout>
+<!-- ══════════════════════════════════════════════
+     NAWIGACJA — fixed, nad zawartością
+════════════════════════════════════════════════ -->
+<nav id="nav" class="fixed left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex flex-col leading-none group">
+      <span class="font-display text-[1.05rem] font-semibold italic text-[#efe6d8] tracking-wide group-hover:text-[#c2502a] transition-colors">
+        Czarna Palarnia
+      </span>
+      <span class="font-mono text-[0.5rem] tracking-[0.22em] uppercase text-[#7e7a4e]">speciality coffee · poznań</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-7">
+      {navLinks.map(l => (
+        <li>
+          <a href={l.href} class="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#efe6d8]/75 hover:text-[#c2502a] transition-colors duration-200">
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- CTA desktop -->
+    <a href="#zamow" class="hidden md:inline-flex items-center gap-2 bg-[#c2502a] text-[#efe6d8] font-mono text-[0.62rem] tracking-[0.12em] uppercase px-4 py-2 hover:bg-[#e07a52] transition-colors duration-200">
+      Zamów kawę →
+    </a>
+
+    <!-- Burger mobile -->
+    <button id="burger" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+      <span class="block w-5 h-px bg-[#efe6d8]"></span>
+      <span class="block w-5 h-px bg-[#efe6d8]"></span>
+      <span class="block w-5 h-px bg-[#efe6d8]"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-[#2a1d16] border-t border-[#c2502a]/20 px-5 py-6 flex flex-col gap-4">
+    {navLinks.map(l => (
+      <a href={l.href} class="font-mono text-[0.72rem] tracking-[0.15em] uppercase text-[#efe6d8]/80 hover:text-[#c2502a] transition-colors py-1">
+        {l.label}
+      </a>
+    ))}
+    <a href="#zamow" class="mt-2 inline-block bg-[#c2502a] text-[#efe6d8] font-mono text-[0.65rem] tracking-[0.12em] uppercase px-4 py-2.5 text-center">
+      Zamów kawę →
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     HERO — asymetryczny editorial, nie szablonowy
+════════════════════════════════════════════════ -->
+<header class="relative min-h-screen bg-[#2a1d16] overflow-hidden flex flex-col">
+  <!-- Tło — obraz kawy z gradientem -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1800&q=80"
+      alt="Ziarna kawy podczas palenia"
+      class="w-full h-full object-cover opacity-30"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-[#2a1d16] via-[#2a1d16]/80 to-transparent"></div>
+    <!-- Grain overlay -->
+    <div class="absolute inset-0 opacity-20" style="background-image: url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E);"></div>
+  </div>
+
+  <!-- Zawartość hero — złamana siatka -->
+  <div class="relative z-10 flex-1 flex items-end pb-16 pt-40">
+    <div class="max-w-7xl mx-auto px-5 w-full">
+
+      <!-- Layout asymetryczny: liczba po lewej, tekst po prawej -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+
+        <!-- Lewa kolumna: duży numer + etykieta pionowa -->
+        <div class="md:col-span-2 flex flex-col justify-end">
+          <div class="font-mono text-[0.58rem] tracking-[0.2em] uppercase text-[#c2502a] mb-3 anim-fadein anim-delay-1">
+            Palarnia / Poznań / est. 2018
+          </div>
+          <div class="font-display text-[8rem] leading-none font-bold text-[#efe6d8]/5 select-none hidden md:block">
+            №1
+          </div>
+        </div>
+
+        <!-- Środkowa kolumna: główne hasło -->
+        <div class="md:col-span-7">
+          <p class="font-mono text-[0.6rem] tracking-[0.25em] uppercase text-[#7e7a4e] mb-5 anim-fadeup anim-delay-1">
+            — świeżo palona kawa specialty
+          </p>
+          <h1 class="font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.95] font-semibold text-[#efe6d8] mb-6 anim-fadeup anim-delay-2" style="letter-spacing:-0.02em">
+            Kawa pali się<br />
+            <em class="text-[#c2502a] not-italic">w tym tygodniu.</em><br />
+            Nie rok temu.
+          </h1>
+          <p class="font-body text-[#efe6d8]/65 text-[1.05rem] leading-relaxed max-w-lg anim-fadeup anim-delay-3">
+            Każda partia single origin trafia do Ciebie w ciągu 72 godzin od wypału.
+            Rzemieślnicze palenie w małych lotach — smak, który można opisać.
+          </p>
+        </div>
+
+        <!-- Prawa kolumna: CTA + drobne info -->
+        <div class="md:col-span-3 flex flex-col items-start md:items-end gap-5 anim-fadeup anim-delay-4">
+          <a href="#zamow" class="group bg-[#c2502a] text-[#efe6d8] font-mono text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3.5 hover:bg-[#e07a52] transition-all duration-300 hover:translate-x-1">
+            Zamów kawę →
+          </a>
+          <a href="#subskrypcja" class="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-[#efe6d8]/50 hover:text-[#7e7a4e] transition-colors underline underline-offset-4">
+            lub subskrybuj co miesiąc
+          </a>
+          <div class="mt-4 border-l-2 border-[#c2502a]/40 pl-4">
+            <div class="font-mono text-[0.6rem] tracking-[0.12em] uppercase text-[#7e7a4e] mb-1">świeżość gwarantowana</div>
+            <div class="font-mono text-[0.72rem] text-[#efe6d8]/60">Wysyłka max 72h po wypale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pasek dolny z datą palenia + arrow -->
+      <div class="mt-12 pt-6 border-t border-[#efe6d8]/10 flex items-center justify-between anim-fadein anim-delay-4">
+        <div class="flex gap-8">
+          <div>
+            <div class="font-mono text-[0.55rem] tracking-[0.18em] uppercase text-[#7e7a4e]">Ostatni wypał</div>
+            <div class="font-mono text-[0.75rem] text-[#efe6d8]/70">Poniedziałek, 16.06.2026</div>
+          </div>
+          <div>
+            <div class="font-mono text-[0.55rem] tracking-[0.18em] uppercase text-[#7e7a4e]">Aktywne originy</div>
+            <div class="font-mono text-[0.75rem] text-[#efe6d8]/70">4 single origin</div>
+          </div>
+        </div>
+        <a href="#kawy" class="font-mono text-[0.6rem] tracking-[0.15em] uppercase text-[#efe6d8]/40 hover:text-[#c2502a] transition-colors">
+          Przeglądaj ↓
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     O PALARNI — redakcyjna, asymetryczna
+════════════════════════════════════════════════ -->
+<section id="o-nas" class="bg-[#efe6d8] py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <!-- Nagłówek sekcji — editorial -->
+    <div class="flex items-start gap-4 mb-16 reveal">
+      <span class="section-num pt-1">02</span>
+      <div>
+        <hr class="rule-thin w-16 mb-3" />
+        <h2 class="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-semibold text-[#241a13] leading-[0.95] italic" style="letter-spacing:-0.02em">
+          Palimy z przekonania,<br />nie z obowiązku.
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+
+      <!-- Tekst — lewa, szeroka -->
+      <div class="md:col-span-7 space-y-5 reveal reveal-delay-1">
+        <p class="font-body text-[#241a13]/80 text-[1.1rem] leading-[1.7]">
+          Czarna Palarnia powstała w Poznaniu w 2018 roku z prostego przekonania: kawa
+          może smakować jak nic innego. Nie jak „kawa". Jak jagody, jak jaśmin, jak syrop klonowy —
+          jeśli zna się ziarno, szanuje producenta i pali uczciwie.
+        </p>
+        <p class="font-body text-[#241a13]/70 text-[1rem] leading-[1.7]">
+          Pracujemy na piecu bębnowym Probat P12. Każdy lot liczy od 8 do 12 kilogramów —
+          wystarczająco dużo by utrzymać powtarzalność, wystarczająco mało by pilnować
+          każdego ziarna. Palenie trwa od 10 do 14 minut; decydujemy minutę po minucie.
+        </p>
+        <p class="font-body text-[#241a13]/70 text-[1rem] leading-[1.7]">
+          Kupujemy bezpośrednio od farmerów i przez zaufanych importerów
+          green coffee — zawsze z certyfikowaną ceną skupu powyżej minimum.
+          Transparentność to nie hasło marketingowe — to powód, dla którego
+          wasi ulubieni baristowie serwują naszą kawę.
+        </p>
+
+        <!-- Trzy fakty jak w etykiecie -->
+        <div class="mt-8 grid grid-cols-3 gap-4 pt-8 border-t border-[#241a13]/15">
+          {[
+            { num: "8–12 kg", label: "wielkość lotu" },
+            { num: "72 h", label: "maks. od wypału do wysyłki" },
+            { num: "14 origin", label: "aktywnych rocznie" }
+          ].map(f => (
+            <div>
+              <div class="font-display text-[2rem] font-semibold text-[#c2502a]">{f.num}</div>
+              <div class="kawa-label mt-1">{f.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Zdjęcie + naklejka — prawa, wąska, z przesunięciem -->
+      <div class="md:col-span-5 relative reveal reveal-delay-2">
+        <div class="relative overflow-hidden" style="aspect-ratio:3/4">
+          <img
+            src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+            alt="Palenie kawy w Czarnej Palarni"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <!-- Overlay etykieta -->
+          <div class="absolute bottom-6 left-6 right-6 bg-[#efe6d8]/90 backdrop-blur-sm p-4 border-l-2 border-[#c2502a]">
+            <div class="kawa-label text-[#7e7a4e] mb-1">Piec bębnowy Probat P12</div>
+            <div class="font-display italic text-[#241a13] text-[1.1rem]">„Słyszymy krakanie pierwszego crack'a. To decyduje."</div>
+            <div class="font-mono text-[0.6rem] text-[#241a13]/50 mt-1">— Marcin Olejnik, head roaster</div>
+          </div>
+        </div>
+        <!-- Rotated label jak naklejka na opakowaniu -->
+        <div class="absolute -top-4 -right-4 bg-[#c2502a] text-[#efe6d8] font-mono text-[0.6rem] tracking-[0.15em] uppercase px-3 py-1.5 rotate-3 shadow-lg">
+          Poznań · PL
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     NASZE KAWY — karty degustacyjne
+════════════════════════════════════════════════ -->
+<section id="kawy" class="bg-[#241a13] py-28 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <!-- Nagłówek -->
+    <div class="mb-16 reveal">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="section-num text-[#7e7a4e]">03</span>
+        <hr class="rule-thin flex-1" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+        <h2 class="font-display text-[clamp(2rem,4.5vw,3.8rem)] font-semibold text-[#efe6d8] leading-[1.0]" style="letter-spacing:-0.02em">
+          Aktualny<br /><em class="text-[#c2502a]">lot palenia</em>
+        </h2>
+        <p class="font-body text-[#efe6d8]/55 text-[0.95rem] leading-relaxed">
+          Każda kawa to odrębna historia — kraj, producent, wysokość, metoda obróbki.
+          Ceny za 250 g, wysyłka w 72 h od wypału.
+        </p>
+      </div>
+    </div>
+
+    <!-- Siatka kart — asymetryczna, 2 kolumny z offsetem -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {kawy.map((kawa, idx) => (
+        <div class={`kawa-card bg-[#2a1d16] p-6 reveal ${idx % 2 === 1 ? 'md:mt-10' : ''} reveal-delay-${(idx % 4) + 1}`}>
+          <!-- Górna linia: numer + kraj -->
+          <div class="flex items-start justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[#c2502a] text-[0.62rem] tracking-[0.18em]">{kawa.num}</span>
+              <div>
+                <div class="kawa-label text-[#7e7a4e]">{kawa.kraj} / {kawa.region}</div>
+                <div class="font-mono text-[0.55rem] tracking-[0.12em] text-[#efe6d8]/30 mt-0.5">{kawa.wysokosc}</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="font-mono text-[0.6rem] tracking-[0.1em] uppercase text-[#7e7a4e]">{kawa.profil}</div>
+              <div class="font-display text-[1.5rem] font-semibold text-[#efe6d8] mt-1">{kawa.cena} zł</div>
+              <div class="font-mono text-[0.5rem] text-[#efe6d8]/35">/ 250 g</div>
+            </div>
+          </div>
+
+          <!-- Nazwa kawy -->
+          <h3 class="font-display text-[1.5rem] italic font-medium text-[#efe6d8] leading-tight mb-4" style="letter-spacing:-0.01em">
+            {kawa.nazwa}
+          </h3>
+
+          <!-- Skala palenia -->
+          <div class="mb-5">
+            <div class="flex justify-between mb-1.5">
+              <span class="font-mono text-[0.53rem] tracking-[0.14em] uppercase text-[#7e7a4e]">profil palenia</span>
+              <span class="font-mono text-[0.53rem] tracking-[0.1em] text-[#efe6d8]/30">jasny — ciemny</span>
+            </div>
+            <div class="roast-track">
+              <div class="roast-fill" data-width={`${kawa.roast}%`} style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Noty smakowe — tagi jak etykieta -->
+          <div class="mb-5">
+            <div class="kawa-label text-[#7e7a4e] mb-2">noty smakowe</div>
+            <div class="flex flex-wrap gap-1.5">
+              {kawa.noty.map(nota => (
+                <span class="font-mono text-[0.58rem] tracking-[0.08em] text-[#efe6d8]/70 bg-[#efe6d8]/8 border border-[#efe6d8]/12 px-2 py-0.5">
+                  {nota}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Opis + CTA -->
+          <p class="font-body text-[#efe6d8]/50 text-[0.875rem] leading-relaxed mb-5">
+            {kawa.opis}
+          </p>
+
+          <div class="flex items-center justify-between pt-4 border-t border-[#efe6d8]/10">
+            <a href="#zamow" class="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-[#c2502a] hover:text-[#e07a52] transition-colors">
+              Zamów tę kawę →
+            </a>
+            <span class="font-mono text-[0.55rem] tracking-[0.1em] text-[#efe6d8]/25 uppercase">w magazynie</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Link do pełnego katalogu -->
+    <div class="mt-10 text-center reveal">
+      <a href="#zamow" class="font-mono text-[0.65rem] tracking-[0.18em] uppercase text-[#7e7a4e] hover:text-[#c2502a] transition-colors underline underline-offset-4">
+        Pełny katalog i archiwum wypałów →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SUBSKRYPCJA — trzy plany
+════════════════════════════════════════════════ -->
+<section id="subskrypcja" class="bg-[#efe6d8] py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <!-- Nagłówek -->
+    <div class="mb-16 reveal">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="section-num">04</span>
+        <hr class="rule-thin w-20" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+        <div class="md:col-span-7">
+          <h2 class="font-display text-[clamp(2rem,4.5vw,3.8rem)] font-semibold text-[#241a13] leading-[1.0]" style="letter-spacing:-0.02em">
+            Świeża kawa<br /><em class="text-[#c2502a]">co miesiąc</em>,<br />bez myślenia.
+          </h2>
+        </div>
+        <div class="md:col-span-5">
+          <p class="font-body text-[#241a13]/65 leading-relaxed">
+            Dobieramy kawę za Ciebie. Ty decydujesz tylko o gramaturze i stopniu zmielenia.
+            Anuluj kiedy chcesz — bez ukrytych warunków.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plany -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {planySubskrypcji.map((plan, idx) => (
+        <div class={`plan-card p-6 bg-[#f7f0e6] reveal reveal-delay-${idx + 1} ${plan.tag === 'POLECAMY' ? 'md:-mt-4 md:mb-4' : ''}`}>
+          <!-- Tag -->
+          <div class="flex items-start justify-between mb-6">
+            <span class={`font-mono text-[0.55rem] tracking-[0.2em] uppercase px-2 py-1 ${plan.tag === 'POLECAMY' ? 'bg-[#c2502a] text-[#efe6d8]' : 'bg-[#241a13]/8 text-[#241a13]/60'}`}>
+              {plan.tag}
+            </span>
+            <div class="text-right">
+              <div class="font-display text-[1.3rem] font-semibold text-[#c2502a]">{plan.cena}</div>
+            </div>
+          </div>
+
+          <h3 class="font-display text-[1.7rem] italic font-semibold text-[#241a13] mb-1 leading-none">{plan.nazwa}</h3>
+          <div class="kawa-label text-[#7e7a4e] mb-4">{plan.kawa}</div>
+          <p class="font-body text-[#241a13]/65 text-[0.9rem] leading-relaxed mb-6">{plan.opis}</p>
+
+          <ul class="space-y-2 mb-7">
+            {plan.features.map(f => (
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#c2502a] flex-shrink-0"></span>
+                <span class="font-body text-[#241a13]/70 text-[0.875rem]">{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a href="#zamow" class={`block text-center font-mono text-[0.65rem] tracking-[0.12em] uppercase py-3 transition-all duration-200 ${plan.tag === 'POLECAMY' ? 'bg-[#c2502a] text-[#efe6d8] hover:bg-[#241a13]' : 'border border-[#241a13] text-[#241a13] hover:bg-[#241a13] hover:text-[#efe6d8]'}`}>
+            Wybierz plan →
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     B2B / DLA KAWIARNI
+════════════════════════════════════════════════ -->
+<section id="b2b" class="bg-[#241a13] py-24">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+
+      <!-- Lewa: zdjęcie kawiarni -->
+      <div class="md:col-span-5 reveal">
+        <div class="relative overflow-hidden" style="aspect-ratio:4/5">
+          <img
+            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
+            alt="Kawiarnia zaopatrzona przez Czarną Palarnię"
+            class="w-full h-full object-cover opacity-80"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#241a13]/70 to-transparent"></div>
+          <div class="absolute bottom-5 left-5 right-5">
+            <div class="kawa-label text-[#7e7a4e] mb-1">Wśród naszych partnerów</div>
+            <div class="font-mono text-[0.65rem] text-[#efe6d8]/60">17 kawiarni · Poznań, Warszawa, Wrocław</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prawa: tekst -->
+      <div class="md:col-span-7 reveal reveal-delay-1">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="section-num text-[#7e7a4e]">05</span>
+          <hr class="rule-thin w-16" />
+        </div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold text-[#efe6d8] leading-[1.0] mb-6" style="letter-spacing:-0.02em">
+          Twoja kawiarnia<br />
+          <em class="text-[#c2502a]">zasługuje</em><br />
+          na lepsze ziarno.
+        </h2>
+        <p class="font-body text-[#efe6d8]/65 text-[1rem] leading-relaxed mb-8 max-w-lg">
+          Dostarczamy kawę dla gastronomii i odsprzedawców z całej Polski.
+          Hurtowe ceny, własne etykiety dla Twojej marki, elastyczne terminy dostaw
+          — i zawsze świeży wypał, nie magazynowe zapasy.
+        </p>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          {[
+            { label: "Minimalne zamówienie", val: "od 3 kg / miesiąc" },
+            { label: "Dostawa", val: "kurierem DPD, co tydzień" },
+            { label: "White label", val: "etykiety na zamówienie" },
+            { label: "Szkolenia", val: "cupping + barista" }
+          ].map(item => (
+            <div class="border border-[#efe6d8]/10 p-4">
+              <div class="kawa-label text-[#7e7a4e] mb-1">{item.label}</div>
+              <div class="font-body text-[#efe6d8]/80 text-[0.9rem]">{item.val}</div>
+            </div>
+          ))}
+        </div>
+
+        <a href="#zamow" class="inline-flex items-center gap-2 bg-[#c2502a] text-[#efe6d8] font-mono text-[0.68rem] tracking-[0.12em] uppercase px-6 py-3 hover:bg-[#e07a52] transition-colors">
+          Zapytaj o współpracę →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     GDZIE PIC I KUPIĆ / GODZINY
+════════════════════════════════════════════════ -->
+<section id="znajdz-nas" class="bg-[#efe6d8] py-20">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <div class="mb-12 reveal">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="section-num">06</span>
+        <hr class="rule-thin w-14" />
+      </div>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold text-[#241a13] leading-tight" style="letter-spacing:-0.02em">
+        Znajdź nas<br /><em class="text-[#c2502a]">w Poznaniu</em>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+      <!-- Info -->
+      <div class="reveal">
+        <!-- Sklep / palarnia -->
+        <div class="mb-8">
+          <div class="kawa-label text-[#7e7a4e] mb-3">Sklep & Palarnia</div>
+          <div class="font-display text-[1.4rem] italic text-[#241a13] mb-2">ul. Półwiejska 37, Poznań</div>
+          <div class="font-body text-[#241a13]/65 text-[0.9rem] mb-4">Wejście od podwórza — szukaj szyldu z ziarnem.</div>
+          <div class="grid grid-cols-2 gap-3">
+            {[
+              { dzien: "Pon – Pt", godz: "08:00 – 18:00" },
+              { dzien: "Sobota", godz: "09:00 – 15:00" },
+              { dzien: "Niedziela", godz: "zamknięte" }
+            ].map(h => (
+              <div class="flex justify-between items-center py-2 border-b border-[#241a13]/10">
+                <span class="kawa-label">{h.dzien}</span>
+                <span class="font-mono text-[0.7rem] text-[#241a13]/70">{h.godz}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Kawiarnie partnerskie -->
+        <div>
+          <div class="kawa-label text-[#7e7a4e] mb-3">Gdzie podajemy naszą kawę</div>
+          <ul class="space-y-2">
+            {[
+              "Kawiarnia Skwer — pl. Wolności 1, Poznań",
+              "Słodownia Coffee — Śródka, Poznań",
+              "Herbaciarnia Mleczna — ul. Krótka 5, Warszawa",
+              "Koffein Studio — Rynek 12, Wrocław"
+            ].map(miejsce => (
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#c2502a] flex-shrink-0 mt-2"></span>
+                <span class="font-body text-[#241a13]/70 text-[0.9rem]">{miejsce}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mapa OSM -->
+      <div class="reveal reveal-delay-1">
+        <div class="overflow-hidden border border-[#241a13]/10" style="aspect-ratio:4/3">
+          <iframe
+            title="Lokalizacja Czarnej Palarni na mapie"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=16.9100%2C52.4000%2C16.9400%2C52.4150&layer=mapnik&marker=52.4075%2C16.9250"
+            width="100%"
+            height="100%"
+            style="border:none"
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="mt-3 flex justify-end">
+          <a href="https://www.openstreetmap.org/?mlat=52.4075&mlon=16.9250#map=16/52.4075/16.9250" target="_blank" rel="noopener" class="font-mono text-[0.58rem] tracking-[0.1em] uppercase text-[#241a13]/40 hover:text-[#c2502a] transition-colors">
+            Otwórz w OpenStreetMap ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     OPINIE
+════════════════════════════════════════════════ -->
+<section id="opinie" class="bg-[#2a1d16] py-20">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <div class="mb-12 reveal">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="section-num text-[#7e7a4e]">07</span>
+        <hr class="rule-thin w-14" />
+      </div>
+      <h2 class="font-display text-[clamp(1.8rem,4vw,3rem)] font-semibold text-[#efe6d8]" style="letter-spacing:-0.02em">
+        Co mówią<br /><em class="text-[#c2502a]">degustatorzy</em>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {opinie.map((op, idx) => (
+        <div class={`bg-[#241a13] p-6 border-l-2 border-[#c2502a] reveal reveal-delay-${idx + 1}`}>
+          <!-- Gwiazdki -->
+          <div class="flex gap-1 mb-4">
+            {Array.from({length: op.ocena}).map(() => (
+              <span class="text-[#c2502a] text-sm">★</span>
+            ))}
+          </div>
+          <!-- Cytat -->
+          <p class="font-display italic text-[#efe6d8]/85 text-[1.05rem] leading-relaxed mb-5">
+            „{op.tekst}"
+          </p>
+          <!-- Autor -->
+          <div class="flex items-center gap-3 pt-4 border-t border-[#efe6d8]/10">
+            <div class="w-8 h-8 rounded-full bg-[#c2502a]/20 flex items-center justify-center">
+              <span class="font-mono text-[0.62rem] text-[#c2502a]">{op.autor[0]}</span>
+            </div>
+            <div>
+              <div class="font-body text-[#efe6d8]/80 text-[0.875rem] font-medium">{op.autor}</div>
+              <div class="kawa-label text-[#7e7a4e]">{op.miasto}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FORMULARZ ZAMÓWIENIA
+════════════════════════════════════════════════ -->
+<section id="zamow" class="bg-[#efe6d8] py-24">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+
+      <!-- Lewa: opis + dane kontaktowe -->
+      <div class="md:col-span-4 reveal">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="section-num">08</span>
+          <hr class="rule-thin w-14" />
+        </div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold text-[#241a13] leading-tight mb-6" style="letter-spacing:-0.02em">
+          Złóż<br /><em class="text-[#c2502a]">zamówienie</em>
+        </h2>
+        <p class="font-body text-[#241a13]/65 leading-relaxed mb-8">
+          Napisz do nas — dobierzemy kawę do Twojego sprzętu i gustu.
+          Odpiszemy w ciągu 24 godzin.
+        </p>
+
+        <div class="space-y-5">
+          <div>
+            <div class="kawa-label text-[#7e7a4e] mb-1">Telefon</div>
+            <div class="font-body text-[#241a13] font-medium">+48 61 234 56 78</div>
+          </div>
+          <div>
+            <div class="kawa-label text-[#7e7a4e] mb-1">E-mail</div>
+            <div class="font-body text-[#241a13] font-medium">zamow@czarnapalarnia.pl</div>
+          </div>
+          <div>
+            <div class="kawa-label text-[#7e7a4e] mb-1">Adres</div>
+            <div class="font-body text-[#241a13]/80 text-[0.9rem]">ul. Półwiejska 37<br />61-888 Poznań</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prawa: formularz -->
+      <div class="md:col-span-8 reveal reveal-delay-1">
+        <form
+          name="zamowienie"
+          method="POST"
+          action="#"
+          class="bg-[#f7f0e6] border border-[#241a13]/12 p-8 space-y-5"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="kawa-label text-[#7e7a4e] block mb-1.5" for="imie">Imię i nazwisko</label>
+              <input
+                type="text"
+                id="imie"
+                name="imie"
+                required
+                placeholder="Jan Kowalski"
+                class="w-full bg-transparent border border-[#241a13]/20 px-4 py-2.5 font-body text-[#241a13] text-[0.9rem] placeholder:text-[#241a13]/30 focus:outline-none focus:border-[#c2502a] transition-colors"
+              />
+            </div>
+            <div>
+              <label class="kawa-label text-[#7e7a4e] block mb-1.5" for="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="jan@email.pl"
+                class="w-full bg-transparent border border-[#241a13]/20 px-4 py-2.5 font-body text-[#241a13] text-[0.9rem] placeholder:text-[#241a13]/30 focus:outline-none focus:border-[#c2502a] transition-colors"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="kawa-label text-[#7e7a4e] block mb-1.5" for="kawa">Jaką kawę chcesz zamówić?</label>
+            <select
+              id="kawa"
+              name="kawa"
+              class="w-full bg-transparent border border-[#241a13]/20 px-4 py-2.5 font-body text-[#241a13] text-[0.9rem] focus:outline-none focus:border-[#c2502a] transition-colors appearance-none"
+            >
+              <option value="">— wybierz kawę lub subskrypcję —</option>
+              <option>Ethiopia Yirgacheffe (54 zł / 250 g)</option>
+              <option>Colombia Huila (62 zł / 250 g)</option>
+              <option>Guatemala Antigua (48 zł / 250 g)</option>
+              <option>Kenya AA Kirinyaga (69 zł / 250 g)</option>
+              <option>Subskrypcja Odkrywca (79 zł / mies.)</option>
+              <option>Subskrypcja Koneser (139 zł / mies.)</option>
+              <option>Subskrypcja Kolekcjoner (259 zł / mies.)</option>
+              <option>Zapytanie B2B / hurt</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="kawa-label text-[#7e7a4e] block mb-1.5" for="mielenie">Mielenie</label>
+            <select
+              id="mielenie"
+              name="mielenie"
+              class="w-full bg-transparent border border-[#241a13]/20 px-4 py-2.5 font-body text-[#241a13] text-[0.9rem] focus:outline-none focus:border-[#c2502a] transition-colors appearance-none"
+            >
+              <option value="">— jak parzysz? —</option>
+              <option>Ziarna (nie mielić)</option>
+              <option>Espresso</option>
+              <option>Moka / aeropress</option>
+              <option>Filtr / V60 / Chemex</option>
+              <option>Prasa francuska</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="kawa-label text-[#7e7a4e] block mb-1.5" for="wiadomosc">Wiadomość (opcjonalnie)</label>
+            <textarea
+              id="wiadomosc"
+              name="wiadomosc"
+              rows={4}
+              placeholder="Opisz swoje preferencje smakowe, sprzęt, ilość..."
+              class="w-full bg-transparent border border-[#241a13]/20 px-4 py-2.5 font-body text-[#241a13] text-[0.9rem] placeholder:text-[#241a13]/30 focus:outline-none focus:border-[#c2502a] transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between">
+            <p class="font-mono text-[0.57rem] tracking-[0.08em] text-[#241a13]/40 max-w-xs">
+              Dane przetwarzane zgodnie z RODO. Nie wysyłamy spamu.
+            </p>
+            <button
+              type="submit"
+              class="bg-[#c2502a] text-[#efe6d8] font-mono text-[0.68rem] tracking-[0.12em] uppercase px-7 py-3 hover:bg-[#241a13] transition-colors duration-300"
+            >
+              Wyślij zamówienie →
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer class="bg-[#2a1d16] py-14 border-t border-[#c2502a]/20">
+  <div class="max-w-7xl mx-auto px-5">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+
+      <!-- Logo + opis -->
+      <div class="md:col-span-2">
+        <div class="font-display text-[1.4rem] italic font-semibold text-[#efe6d8] mb-1">Czarna Palarnia</div>
+        <div class="kawa-label text-[#7e7a4e] mb-4">Rzemieślnicza palarnia kawy speciality · Poznań · est. 2018</div>
+        <p class="font-body text-[#efe6d8]/45 text-[0.875rem] leading-relaxed max-w-xs">
+          Palimy małymi lotami, sprzedajemy świeże. Single origin z Etiopii, Kenii, Kolumbii i Gwatemali.
+        </p>
+      </div>
+
+      <!-- Linki -->
+      <div>
+        <div class="kawa-label text-[#7e7a4e] mb-4">Nawigacja</div>
+        <ul class="space-y-2">
+          {navLinks.map(l => (
+            <li>
+              <a href={l.href} class="font-body text-[#efe6d8]/55 text-[0.875rem] hover:text-[#c2502a] transition-colors">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div>
+        <div class="kawa-label text-[#7e7a4e] mb-4">Kontakt</div>
+        <div class="space-y-2">
+          <div class="font-body text-[#efe6d8]/55 text-[0.875rem]">ul. Półwiejska 37<br />61-888 Poznań</div>
+          <div class="font-body text-[#efe6d8]/55 text-[0.875rem]">+48 61 234 56 78</div>
+          <div class="font-body text-[#efe6d8]/55 text-[0.875rem]">zamow@czarnapalarnia.pl</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Dolna linia: copyright + credit -->
+    <div class="pt-6 border-t border-[#efe6d8]/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+      <div class="font-mono text-[0.58rem] tracking-[0.1em] uppercase text-[#efe6d8]/25">
+        © 2026 Czarna Palarnia · ul. Półwiejska 37, Poznań · NIP 782-001-23-45
+      </div>
+      <!-- CREDIT OBOWIĄZKOWY -->
+      <p class="font-mono text-[0.58rem] tracking-[0.08em] text-[#efe6d8]/30 text-right">
+        Przykładowa strona zrobiona przez{" "}
+        <a
+          href="https://stronainternetowa.biz"
+          target="_blank"
+          rel="noopener"
+          class="text-[#7e7a4e] hover:text-[#c2502a] transition-colors underline underline-offset-2"
+        >
+          stronainternetowa.biz
+        </a>
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  /* Scrolled nav na tej stronie */
+  #nav {
+    background: transparent;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  #nav.scrolled {
+    background: color-mix(in srgb, #2a1d16 94%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid color-mix(in srgb, #c2502a 30%, transparent);
+  }
+</style>
+</Layout>

@@ -1,0 +1,17 @@
+{
+  "name": "czarna-palarnia",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Czarna Palarnia — rzemieślnicza palarnia kawy speciality, sklep i subskrypcja",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": { "astro": "^5.7.0" },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.17",
+    "tailwindcss": "^4.0.17"
+  }
+}

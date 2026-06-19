@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/* ======================================================
+   CZARNA PALARNIA — CRAFT EDITORIAL / ZIARNISTY
+   ====================================================== */
+
+@theme {
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "Hanken Grotesk", system-ui, sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* Paleta */
+  --color-krem:      #efe6d8;
+  --color-espresso:  #2a1d16;
+  --color-terakota:  #c2502a;
+  --color-oliwka:    #7e7a4e;
+  --color-ink:       #241a13;
+  --color-papier:    #f7f0e6;
+  --color-papier-ciemny: #e2d5c3;
+  --color-terakota-jasna: #e07a52;
+  --color-oliwka-jasna:   #a8a47a;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+  background-color: var(--color-krem);
+  color: var(--color-ink);
+  font-size: 16px;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-krem);
+  /* Delikatna tekstura ziarna — SVG noise jako data URI */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-terakota);
+  color: var(--color-krem);
+}
+
+/* ── PROMO BAR (obowiązkowy) ── */
+#promo-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  background: #0d0d10;
+  color: #f3f3f1;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+#promo-bar strong { font-weight: 700; }
+#promo-bar:hover { background: #16161a; }
+
+/* ── NAV zsunięty pod pasek ── */
+#nav { top: 2.25rem; }
+
+#nav.scrolled {
+  background: color-mix(in srgb, var(--color-espresso) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-terakota) 30%, transparent);
+}
+
+/* ── REVEAL (scroll animation) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── EDITORIAL ELEMENTS ── */
+
+/* Numeracja sekcji jak w magazynie */
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-terakota);
+  text-transform: uppercase;
+}
+
+/* Etykieta jak na opakowaniu kawy */
+.kawa-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-oliwka);
+}
+
+/* Linia dekoracyjna */
+.rule-thin {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-terakota), transparent);
+  border: none;
+}
+
+/* ── SKALA PALENIA (visual roast meter) ── */
+.roast-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-papier-ciemny);
+  position: relative;
+  overflow: hidden;
+}
+.roast-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #e8c87a 0%, #c2502a 50%, #2a1d16 100%);
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* width ustawiamy inline style="width: X%" */
+
+/* ── SUBSKRYPCJA KARTY — obrót, asymetria ── */
+.plan-card {
+  position: relative;
+  border: 1.5px solid var(--color-espresso);
+}
+.plan-card::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 1px solid var(--color-terakota);
+  opacity: 0.3;
+  transform: rotate(0.8deg);
+  pointer-events: none;
+}
+
+/* ── KLASY POMOCNICZE ── */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* Animacja wejścia dla hero */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.anim-fadeup { animation: fadeUp 0.9s ease both; }
+.anim-fadein { animation: fadeIn 1.2s ease both; }
+.anim-delay-1 { animation-delay: 0.15s; }
+.anim-delay-2 { animation-delay: 0.35s; }
+.anim-delay-3 { animation-delay: 0.55s; }
+.anim-delay-4 { animation-delay: 0.75s; }
+
+/* ── Diagonalny separator ── */
+.diagonal-sep {
+  height: 60px;
+  background: var(--color-espresso);
+  clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
+}
+.diagonal-sep-inv {
+  height: 60px;
+  background: var(--color-espresso);
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Hover na kartach kaw */
+.kawa-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid color-mix(in srgb, var(--color-espresso) 15%, transparent);
+}
+.kawa-card:hover {
+  transform: translateY(-4px) rotate(-0.3deg);
+  box-shadow: 6px 6px 0 var(--color-espresso);
+}
+
+/* Input style */
+input, textarea, select {
+  font-family: var(--font-body);
+}
