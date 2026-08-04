@@ -303,7 +303,7 @@ const navLinks = [
       <div class="md:col-span-5 relative reveal reveal-delay-2">
         <div class="relative overflow-hidden" style="aspect-ratio:3/4">
           <img
-            src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+            src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=800&q=80"
             alt="Palenie kawy w Czarnej Palarni"
             class="w-full h-full object-cover"
             loading="lazy"
@@ -608,13 +608,11 @@ const navLinks = [
 
       <!-- Mapa OSM -->
       <div class="reveal reveal-delay-1">
-        <div class="overflow-hidden border border-[#241a13]/10" style="aspect-ratio:4/3">
+        <div class="overflow-hidden border border-[#241a13]/10 relative" style="aspect-ratio:4/3">
           <iframe
             title="Lokalizacja Czarnej Palarni na mapie"
             src="https://www.openstreetmap.org/export/embed.html?bbox=16.9100%2C52.4000%2C16.9400%2C52.4150&layer=mapnik&marker=52.4075%2C16.9250"
-            width="100%"
-            height="100%"
-            style="border:none"
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;"
             loading="lazy"
           ></iframe>
         </div>
